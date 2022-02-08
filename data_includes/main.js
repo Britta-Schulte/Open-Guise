@@ -353,9 +353,9 @@ newTrial("Probedurchlauf2",
 audios = []     // audios will reference the audios in a randomized order for simple playback
 audios2 = []    // audios2 will ultimately be a copy of audios
 // Create dummy trials to browse the table and feed then shuffle audios
-Template("OG-audios.csv", row => 
+Template("OG-audios.csv", row =>
     newTrial( audios.push(row.Audio),
-    fisherYates(audios) ) 
+    fisherYates(audios) )
     )
 
 // Now create the Item trials reading the audio references from audios
