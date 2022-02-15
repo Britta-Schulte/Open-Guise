@@ -2,78 +2,9 @@ PennController.ResetPrefix(null);
 PennController.AddHost("https://amor.cms.hu-berlin.de/~idlsfbnd/openguise/");
 PennController.DebugOff();
 
-Sequence("Info","Consent","Code","Probedurchlauf1","Counter",,"Meta1","Meta2","send","Final");
-SetCounter("Counter","inc",1);
+Sequence("Info","Consent","Code","Anleitung","Item","ItemQ","Meta1","Meta2","send","Final");
 
-//PROBEDURCHLAUF
-newTrial("Probedurchlauf1",
-    newImage("HU","HU Logo.png")
-        .size(289,65)
-    ,
-    newImage("UNam","UNam Logo.png")
-        .size(272,85)
-    ,
-    newImage("SFB","SFB Logo.png")
-        .size(280,86)
-    ,
-    newCanvas("Logosnebeneinander",1138,100)
-        .add(100,0, getImage("HU"))
-        .add(413,0, getImage("UNam"))
-        .add(750,0, getImage("SFB"))
-        .center()
-        .print()
- ,
-    newText("Probe-&Uuml;berschrift","<b>&Uuml;BUNG</b></p>")
-        .center()
-        .print()
-,
-    newText("Probe-1","<p>Bitte klicken Sie als erstes auf die <b>Play</b>, um die Aufnahme abzuspielen. <br>Diese k&ouml;nnen Sie nicht wiederholen. H&ouml;ren Sie also bitte genau hin.</p>")
-        .center()
-        .print()
-,
-    newAudio("Probe", "Audio1.mp3")
-        .center()
-        .print()
-,
-    getAudio("Probe")
-        .wait()
-,
-    newText("Probe-2","Ist die Aufnahme vorbei, wählen Sie bitte per Mausklick je einen Punkt auf den unten befindlichen Skalen aus.<br></p><b>Dabei gibt es weder richtige noch falsche Antworten, wir interessieren uns für Ihre subjektive Einschätzung. Bitte gehen Sie also rein intuitiv vor!</b></p>")
-        .center()
-        .print()
-,
-    newText("Probe-7","<br><b>Wie bewerten Sie die gehörte Person?</b></p>")
-        .center()
-        .print()
-,
-    newScale("Probeskala1", 9)
-        .settings.labelsPosition("bottom").color("white")
-        .settings.before(newText("Freund*in"))
-        .settings.after(newText("Lehrer*in"))
-        .center()
-,
-newText("Probe-8","</p>Fallen Ihnen spontan weitere Eigenschaften zu dieser Person ein?")
-.center()
-.print()
-,
-newCanvas("Probetextfeld5", 1, 10)
-.center()
-.print()
-,
-newTextInput("Probetexteingabe5")
-.center()
-.print()
-,        
-newText("Probe-9", "<br>Sehr gut! Sobald Sie die Textfelder ausgefüllt und Werte auf den Skalen ausgew&auml;hlt haben, erscheint ein Button am Ende der Seite, durch den Sie zur n&auml;chsten Aufnahme gelangen.</p>")
-.center()
-.print()
-,       
-newButton("Weiter","Weiter")
-.center()
-.print()
-.wait(getScale("Probeskala1").test.selected())
-)
-,
+
 //audio 
 
 audios = []     // audios will reference the audios in a randomized order for simple playback
@@ -94,29 +25,37 @@ audio = ""
         audio = audios.shift(), // Extract next entry from audios
         audios2.push(audio)     // Place it in audios2
         ,
-         newText("Überschrift","<p><b>NEUE AUFNAHME - PHASE 1<b><p>")
+    newAudio( audio )
             .center()
-            .print()
-        ,
-        newText("Anleitung","Bitte auf Play klicken, um die Aufnahme abzuspielen. Diese können Sie nicht wiederholen, hören Sie also bitte genau hin.<p>")
-            .print()
-        ,
-        newAudio( audio )
-            .center()
-            .print()
             .once()
         ,
-        newText("Bewertung","<p>Wie bewerten Sie die gehörte Person? Wählen Sie entsprechend einen Punkt auf der Skala aus. </p><b>Dabei gibt es weder richtige noch falsche Antworten, wir interessieren uns für Ihre subjektive Einschätzung. Bitte gehen Sie also rein intuitiv vor!</b></p><p>")
-            .print()
+    newImage("message","MessageOpenGuise.png")
+            .size(708,522)
         ,
+    newCanvas("Message", 708,522 )
+        .add(   0, 0, getImage("message"))
+        .add( 150, 360, getAudio(audio))
+    .print()
+         ,
+        newText("Bewertung","<p><br>Bitte der Aufnahme eine Gesprächssituation zuordnen. Hat die Sprecherin mit einer <b>Freund*in</b> oder einer <b>Lehrer*in</b> gesprochen? Dazu Punkt auf der Skala auswählen. </p>")
+          .settings.css("font-family", "calibri").settings.css("font-size", "18px")
+           .center()
+            .print()
+    ,
+    newCanvas(600,120)
+        .add(50, 0, getText("Bewertung"))
+        .center()
+        .print()
+      ,
     newScale("Skala1", 9)
+        .settings.css("font-family", "calibri").settings.css("font-size", "22px")
         .settings.labelsPosition("bottom").color("white")
-        .settings.before(newText("Freund*in"))
-        .settings.after(newText("Lehrer*in"))
+        .settings.before(newText("<b>Freund*in</b>"))
+        .settings.after(newText("<b>Lehrer*in</b>"))
         .center()
         ,
-    newCanvas(600,300)
-        .add(60, 0, getScale("Skala1").settings.log("final"))
+    newCanvas(600,50)
+        .add(150, 0, getScale("Skala1").settings.log("final"))
         .center()
         .print()
     ,
@@ -130,11 +69,11 @@ audio = ""
 ,
 newTrial("Zwischenstopp",
  
-    newText("Anleitung","Vielen Dank! Nun beginnt die zweite Phase des Experiments. Sie werden in den nächsten Schritten die gleichen Aufnahmen erneut hören und dazu Fragen per Textfeld beantworten.<p>")
+    newText("Anleitung","Vielen Dank! Nun beginnt die zweite Phase des Experiments. In den nächsten Schritten werden die gleichen Aufnahmen erneut angehört und es soll die vorherige Einordnung der Nachrichten in eine Gesprächssituation begründet werden.<p>")
         .center()
         .print()
 ,
-    newButton("Weiter")
+    newButton("Weiter", "Bitte weiter klicken sobald bereit")
     .center()
         .print()
         .wait()
@@ -147,44 +86,45 @@ audio = ""
     newTrial( "ItemQ",
         audio = audios2.shift() // Extract next entry from audios2
         ,
-        newText("Überschrift","<p><b>NEUE AUFNAHME - PHASE 2<b><p>")
-            .center()
-            .print()
-        ,
-        newText("Anleitung","Bitte klicken Sie auf Play, um die Aufnahme abzuspielen. Diese können Sie nicht wiederholen, hören Sie also bitte genau hin.<p>")
-            .print()
-        ,
         newAudio( audio )
             .center()
-            .print() // Play back the audio
+            .once()
         ,
-    newText("Anweisung","Bitte beantworten Sie die Fragen in den dafür vorgesehenen Textfeldern und bestätigen die Eingabe jeweils mit <b>Enter</b>.</p><b>Dabei gibt es weder richtige noch falsche Antworten, wir interessieren uns für Ihre subjektive Einschätzung. Bitte gehen Sie also rein intuitiv vor!</b></p>")
+    newImage("message","MessageOpenGuise.png")
+            .size(708,522)
+        ,
+    newCanvas("Message", 708,522 )
+        .add(   0, 0, getImage("message"))
+        .add( 150, 360, getAudio(audio))
+    .print()
+         ,
+        newText("Bewertung2","<p><br>Bitte die vorherige Einordnung der Gesprächssituation begründen. <b>Warum</b> hat die Sprecherin mit einer <b>Freund*in</b> oder einer <b>Lehrer*in</b> gesprochen?</p>")
+          .settings.css("font-family", "calibri").settings.css("font-size", "18px")
+           .center()
+            .print()
+    ,
+    newCanvas(600,120)
+        .add(50, 0, getText("Bewertung2"))
         .center()
         .print()
-,
-    newText("Frage1","Wie alt ist die gehörte Person?")
-        .center()
-        .print()
-,
-    newCanvas("textfeld1", 1, 10)
-        .center()
-        .print()
-,
-    newTextInput("texteingabe1")
+      ,
+       newTextInput("Begründung")
         .center()
         .print()
         .log()
 
 ,
-    getTextInput("texteingabe1").settings.log("final"),
-   
+    getTextInput("Begründung").settings.log("final")
+
 ,
     newButton( "Weiter" )
         .center()
         .print()
-        .wait(getTextInput("texteingabe1").test.text(/[a-z]+/)
+        .wait(getTextInput("Begründung").test.text(/[a-z]+/))
+    )
     .log("audio", audio)
-)
+    
+    )
     ,
 //New Consent 
 //Mit Boxen zum Anklicken und Dateien zum herunterladen; angelehnt an C04
@@ -320,45 +260,88 @@ newHtml("Anleitung","anleitung.html")
     .center()
     .print()
 ,
-newImage("Erklärbild","Erklärbild2.png")
-    .size(800,370)
+newButton("buttonErklärung", "Weiter zum Erklärbild")
+            .settings.css("font-family", "calibri").settings.css("font-size", "12px")
+            .settings.center()
+            .print()
+            .wait()
+,
+getHtml("Anleitung")
+    .remove()
+,
+getButton("buttonErklärung")
+    .remove()
+,
+newText("Anleitung2", "So sieht das Experiment nachher aus. Als nächstes folgt eine Probe des Experiments.")
+    .settings.css("font-family", "calibri").settings.css("font-size", "16px")
+            .settings.center()
+            .print()
+,
+newImage("openguiseanleitung", "OpenGuiseAnleitung.png")
+    .settings.center()
     .print()
 ,
-
-newText("Test", "<font color=#DF0101> Bitte hier einmal ausprobieren und einen  beliebigen Text <br>eingeben. Die Eingabe dann mit <strong>Enter</strong> bestätigen.<br> Danach kann das Experiment gestartet werden.</font>")
-    .settings.css("width, 15%", "text-align, justify")
-
-
-     ,
-newTextInput("Probe")
-    .size(280,40)
-    ,
-newCanvas("Codetest", 1000, 40)
-    .settings.add(0,0,getText("Test"))
-        .settings.add(420,2, getTextInput("Probe"))
-           //.settings.center()
-           .print()
-
+newButton("buttonProbe", "Weiter")
+            .settings.css("font-family", "calibri").settings.css("font-size", "12px")
+            .settings.center()
+            .print()
+            .wait()
 ,
-newText("Leerzeile"," <br></p>")
-    .center()
-    .print()
+getText("Anleitung2")
+    .remove()
+,
+getImage("openguiseanleitung")
+    .remove()
+,
+getButton("buttonProbe")
+    .remove()
+,
+NewText("Probe1","<p>Bitte einmal auf <b> Play> klicken.</p>")
+        .center()
+        .print()
+,
+      newAudio("Probe", "Audio1.wav")
+        .center()
+        .once()
+        .print()
+        
+,
+    newText("Probe-2","<p>Probe für Durchgang 1: Bitte Punkt auf der <b>Skala</b> anklicken<br>Hat die Sprecherin mit einer <b>Freund*in</b> oder einer <b>Lehrer*in</b> gesprochen?</p>")
+        .center()
+        .print()
+,
+    
+    newScale("Probeskala1", 9)
+        .settings.css("font-family", "calibri").settings.css("font-size", "22px")
+        .settings.labelsPosition("bottom").color("white")
+        .settings.before(newText("<b>Freund*in</b>"))
+        .settings.after(newText("<b>Lehrer*in</b>"))
+        .center()
+        .print()
+,
+newText("Probe-8","<p><b>Probe für Durchgang 2: Bitte einen kurzen Text in das Textfeld schreiben.</b></p>")
+.center()
+.print()
+,
+newCanvas("Probetextfeld5", 1, 10)
+.center()
+.print()
+,
+newTextInput("Probetexteingabe5")
+.center()
+.print()
+,        
+newText("Probe-4", "<br>Sehr gut! Sobald ein Wert auf der Skala ausgewählt wurde und Text im Textfeld steht, erscheint ein Button am Ende der Seite, mit dem das Experiment gestartet wird.</p>")
+.center()
+.print()
+,       
+newButton("Experimentstarten","Experiment beginnen")
+.center()
+.print()
+.wait(getScale("Probeskala1").test.selected())
+)
 ,
 
-
-getTextInput("Probe")
-    .wait()
-,
-
-newText("Weiter","<p><br>Auf den Button klicken, um das Experiment zu beginnen.")
-    .center()
-    .print()
-,
-newButton("Weiter","Experiment beginnen")
-    .center()
-    .print()
-    .wait()
-    ),
 
     //Metadaten
     //Personenbezogene Daten Seite 1 - Alter, Geschlecht, Bildung, Sozialerstatus
@@ -736,7 +719,7 @@ newText("Leerzeile"," <br></p>")
 
 // Send results manually
 SendResults("send")
-
+),
 newTrial("Final",
          newText("<p>Vielen Dank f&uuml;r Ihre Teilnahme! Die Studie ist hiermit beendet. </p>")
             .settings.css("font-family","times new roman") .settings.css("font-size", "18px")
