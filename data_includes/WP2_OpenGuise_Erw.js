@@ -271,7 +271,9 @@ audio = ""
         newButton( "Weiter" )
             .center()
             .print()
-            .wait(getScale("Skala1").test.selected())
+            .wait(getScale("Skala1").test.selected()
+              .failure( newText('errorage', "<br>Bitte Punkt auf der Skala wählen.").color("red") .center().print() )
+            )
     )
     .log("audio", audio)    // Log which audio was played
     )
@@ -323,25 +325,32 @@ audio = ""
     newButton( "Weiter" )
         .center()
         .print()
-        .wait(getTextInput("Begründung").test.text(/^.+/))
+        .wait(getTextInput("Begründung").test.text(/^.+/)
+             .failure( newText('errorage', "<br>Bitte Begründung angeben.").color("red") .center().print() )
+        )
+            
             )
     .log("audio", audio)
 )
  //Metadaten
     //Personenbezogene Daten Seite 1 - Alter, Geschlecht, Bildung, Sozialerstatus
 PennController("Meta1",
-    newImage("HU","HU Logo.png")
-        .size(289,65)
-    ,
-     newImage("SFB","SFB Logo.png")
-        .size(280,86)
-    ,
-    newCanvas("Logosnebeneinander",1138,100)
-        .add(100,0, getImage("HU"))
-        .add(750,0, getImage("SFB"))
-        .center()
-        .print()
- ,
+    newImage("HU","HU Logo.png")  
+            .size(289,65)
+         ,
+        newImage("UNam","UNam Logo.png")
+            .size(230,60)
+        ,
+         newImage("SFB","SFB Logo.png")
+            .size(280,86)
+        ,
+         newCanvas("Logosnebeneinander",1138,100) //bildet den Header mit Logos
+            .add(100,0, getImage("HU"))
+            .add(450,0, getImage("UNam"))
+            .add(750,0, getImage("SFB"))
+            .center()
+            .print()
+        ,
 
     newText("Meta-1", "<b>Personenbezogene Daten</b> <p>Wir brauchen einige persönliche Angaben von Ihnen. Diese werden anonymisiert gespeichert und eine spätere Zuordnung zu Ihnen wird nicht möglich sein. Bitte nehmen Sie sich beim Ausfüllen der Felder Zeit.<p>")
  //       .settings.css("text-align","justify")
@@ -558,18 +567,22 @@ PennController("Meta1",
  ;
  //Metadaten 2: Sprachbiographie
 PennController("Meta2",
-    newImage("HU","HU Logo.png")
-        .size(289,65)
-    ,
-        newImage("SFB","SFB Logo.png")
-        .size(280,86)
-    ,
-    newCanvas("Logosnebeneinander",1138,100)
-        .add(100,0, getImage("HU"))
-        .add(750,0, getImage("SFB"))
-        .center()
-        .print()
-    ,
+    newImage("HU","HU Logo.png")  
+            .size(289,65)
+         ,
+        newImage("UNam","UNam Logo.png")
+            .size(230,60)
+        ,
+         newImage("SFB","SFB Logo.png")
+            .size(280,86)
+        ,
+         newCanvas("Logosnebeneinander",1138,100) //bildet den Header mit Logos
+            .add(100,0, getImage("HU"))
+            .add(450,0, getImage("UNam"))
+            .add(750,0, getImage("SFB"))
+            .center()
+            .print()
+        ,
 
        newText("SprachenMutter","<b>Welche Sprachen spricht/sprach Ihre Mutter?</b><br>Bitte sortieren und mit der am besten gesprochenen Sprache beginnen.")
  //       .center()
@@ -653,7 +666,27 @@ newText("Leerzeile"," <br></p>")
                  .center()
                 .print()
                  ,
+newText("Email","<b>Dürften wir dich in Zukunft erneut kontaktieren?</b><br>Wenn ja, bitte Emailadresse angeben.<br>Die Angabe der Kontaktdaten ist freiwillig. Um Anonymität zu gewährleisten, wird diese Angabe getrennt vom ausgefüllten Fragebogen archiviert.")
+//        .center()
+        .print()
+,
+    newCanvas("Email", 1, 10)
+ //       .center()
+        .print()
+,
 
+    newTextInput("Email")
+ //       .center()
+        .size(600,80)
+        .print()
+,
+    getTextInput("Email")
+        .log("final")
+,
+newText("Leerzeile"," <br></p>")
+                 .center()
+                .print()
+                 ,
     newButton("Ende", "Experiment beenden und Daten abschicken")
                .settings.css("font-family", "calibri").settings.css("font-size", "18px")
                //.settings.center()
