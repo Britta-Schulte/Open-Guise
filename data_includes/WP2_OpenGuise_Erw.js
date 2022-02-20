@@ -712,8 +712,10 @@ newText("Leerzeile"," <br></p>")
              ).and(
              getTextInput("SprachenSelbst").test.text(/^.+/) // testing if at least one digit was written in the input box
                 .failure(
-                   newText("errorselbst","<br>Bitte angeben welche Sprachen Sie im Alltan sprechen.")
+                   newText("errorselbst","<br>Bitte angeben welche Sprachen Sie im Alltag sprechen.")
                    .settings.color("red")
+                   .center()
+                   .print())
             ).and(
              getTextInput("Dialekt").test.text(/^.+/) // testing if at least one digit was written in the input box
                 .failure(
@@ -721,7 +723,7 @@ newText("Leerzeile"," <br></p>")
                    .settings.color("red")
                    .center()
                    .print())
-            )  )
+            )  
 
  )
 )
