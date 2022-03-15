@@ -6,12 +6,15 @@ PennController.Sequence("Info",
                         "Code",
                         "Anleitung",
                         "Probedurchlauf",
+                        "Counter",
                         "Item",
                         "Zwischenstopp",
                         "ItemQ",
                         "Meta1","Meta2", "send","Final");
 PennController.DebugOff();
 var progressBarText = "Fortschritt";
+
+PennController.SetCounter("Counter","inc",1)
 
 //WILLKOMMENSSEITE & INFOBLATT
 PennController("Info",
