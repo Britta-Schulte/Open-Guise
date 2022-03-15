@@ -1,4 +1,7 @@
-Audio
-openguise_m_sd.wav
-openguise_m_namgram.wav
-openguise_m_namlex.wav
+Audio,Group
+openguise_m_sd.wav,A
+openguise_m_namgram.wav,A
+openguise_m_namlex.wav,A
+openguise_w_namlex.wav,B
+openguise_w_namgram.wav,B
+openguise_w_sd.wav,B
