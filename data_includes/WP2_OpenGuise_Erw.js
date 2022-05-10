@@ -192,8 +192,8 @@ PennController("Probedurchlauf",
     newScale("Probeskala1", 9)
         .settings.css("font-family", "calibri").settings.css("font-size", "22px")
         .settings.labelsPosition("bottom").color("white")
-        .settings.before(newText("<b>Freund*in</b>"))
-        .settings.after(newText("<b>Lehrer*in</b>"))
+        .settings.before(newText("<b>Freundin/Freund</b>"))
+        .settings.after(newText("<b>Lehrerin/Lehrer</b>"))
         .center()
         .print()
     ,
@@ -262,8 +262,8 @@ audio = ""
     newScale("Skala1", 9)
         .settings.css("font-family", "calibri").settings.css("font-size", "22px")
         .settings.labelsPosition("bottom").color("white")
-        .settings.before(newText("<b>Freund*in</b>"))
-        .settings.after(newText("<b>Lehrer*in</b>"))
+        .settings.before(newText("<b>Freundin/Freund</b>"))
+        .settings.after(newText("<b>Lehrerin/Lehrer</b>"))
         .center()
         ,
     newCanvas(600,50)
@@ -497,7 +497,7 @@ PennController("Meta1",
                .settings.add("A", "B", "C","D", "E", "F","G", "H", "I","J")
                .log()
                ,
-               newImage("leiter", "https://amor.cms.hu-berlin.de/~patarroa/Leiter.jpeg")
+               newImage("leiter", "https://amor.cms.hu-berlin.de/~idlsfbnd/Leiter.jpeg")
                .settings.size(200,300)
                ,
                newCanvas("leitercanvas", 1000,20)
