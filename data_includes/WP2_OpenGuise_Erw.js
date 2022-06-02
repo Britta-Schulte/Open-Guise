@@ -75,7 +75,7 @@ PennController("Consent",
          .log()
          .wait(
              getHtml("Consent").test.complete() //testet ob alle Boxen im Htmldokument angeklickt wurden
-            .failure(getHtml("Consent").warn()) //gibt einen warntext aus falls nicht
+            .failure(newText('errorconsent', "<br>Bitte die Einwilligung per Mausklick bestätigen.").color("red") .center().print()) //gibt einen warntext aus falls nicht
              )
 )
 
@@ -122,7 +122,7 @@ PennController("Code",
         .print()
         .wait(
             getTextInput("Texteingabe-Code").test.text(/^.+/)
-                    .failure( newText('errorcode', "<br>Bitte gib den Code ein.").color("red") .center().print() )
+                    .failure( newText('errorcode', "<br>Bitte den Code eingeben.").color("red") .center().print() )
             )
     ,
     newText("Leerzeile"," <br></p>")
@@ -192,8 +192,8 @@ PennController("Probedurchlauf",
     newScale("Probeskala1", 9)
         .settings.css("font-family", "calibri").settings.css("font-size", "22px")
         .settings.labelsPosition("bottom").color("white")
-        .settings.before(newText("<b>Freund*in</b>"))
-        .settings.after(newText("<b>Lehrer*in</b>"))
+        .settings.before(newText("<b>Freundin/Freund</b>"))
+        .settings.after(newText("<b>Lehrerin/Lehrer</b>"))
         .center()
         .print()
     ,
@@ -209,7 +209,7 @@ PennController("Probedurchlauf",
         .center()
         .print()
     ,        
-    newText("Probe-4", "<br>Sehr gut! Sobald ein Wert auf der Skala ausgewählt wurde und Text im Textfeld steht, erscheint ein Button am Ende der Seite, mit dem das Experiment gestartet wird.</p>")
+    newText("Probe-4", "<br>Sehr gut! Sobald ein Wert auf der Skala ausgewählt wurde und Text im Textfeld steht, kann das Experiment per Klick auf den Button am Ende der Seite gestartet werden.</p>")
         .settings.css("font-family", "calibri").settings.css("font-size", "18px")
         .settings.center()
         .print()
@@ -217,7 +217,12 @@ PennController("Probedurchlauf",
     newButton("Weiter", "Bitte weiter klicken. Das Experiment startet.")
             .center()
             .print()
-            .wait()
+            .wait(getScale("Probeskala1").test.selected()
+              .failure( newText('errorprobeskala1', "<br>Bitte Punkt auf der Skala wählen.").color("red") .center().print() )
+                  ,
+                  getTextInput("Probetexteingabe5").test.selected()
+              .failure( newText('errorprobetexteingabe5', "<br>Bitte einen kurzen Text eingeben.").color("red") .center().print() )         
+          )
         )
 audios = []     // audios will reference the audios in a randomized order for simple playback
 ,
@@ -262,8 +267,8 @@ audio = ""
     newScale("Skala1", 9)
         .settings.css("font-family", "calibri").settings.css("font-size", "22px")
         .settings.labelsPosition("bottom").color("white")
-        .settings.before(newText("<b>Freund*in</b>"))
-        .settings.after(newText("<b>Lehrer*in</b>"))
+        .settings.before(newText("<b>Freundin/Freund</b>"))
+        .settings.after(newText("<b>Lehrerin/Lehrer</b>"))
         .center()
         ,
     newCanvas(600,50)
@@ -497,7 +502,7 @@ PennController("Meta1",
                .settings.add("A", "B", "C","D", "E", "F","G", "H", "I","J")
                .log()
                ,
-               newImage("leiter", "https://amor.cms.hu-berlin.de/~patarroa/Leiter.jpeg")
+               newImage("leiter", "https://amor.cms.hu-berlin.de/~idlsfbnd/Leiter.jpeg")
                .settings.size(200,300)
                ,
                newCanvas("leitercanvas", 1000,20)
