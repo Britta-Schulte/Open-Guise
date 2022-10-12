@@ -482,38 +482,9 @@ PennController("Meta1",
                .print()
                ,
                newCanvas("filler", 1, 20)
-
                .print()
                ,
 
-              //Leiter
-               newText("Leiter","<b>Die untenstehende Leiter</b> repr&auml;sentiert den relativen Sozialstatus der Menschen in Deutschland. "
-                       +"An der Spitze der Leiter stehen Menschen mit relativ hohem Status – diejenigen, die das meiste Geld, die beste Bildung und die angesehensten Arbeitspl&auml;tze haben. Ganz unten sind Menschen mit relativ niedrigem Status – beispielsweise als arbeitslos Gemeldete. Relativ weit unten zu verorten w&auml;ren auch diejenigen, die nur wenig Geld verdienen, einen niedrigen Bildungstand haben, und / oder Berufe aus&uuml;ben, die die Gesellschaft als eher wenig respektabel ansieht."
-                       +"<br> Wo w&uuml;rden Sie Sich auf dieser Leiter einordnen? W&auml;hlen Sie bitte die Sprosse, die Ihrem empfundenen Sozialstatus am ehesten entspricht.")
-               .settings.css("font-size", "18px")
-               .settings.css("text-align","justify")
-               ,
-               newDropDown("leiter", "Bitte eine Option ausw&auml;hlen")
-               .settings.add("A", "B", "C","D", "E", "F","G", "H", "I","J")
-               .log()
-               ,
-               newImage("leiter", "https://amor.cms.hu-berlin.de/~patarroa/Leiter.jpeg")
-               .settings.size(200,300)
-               ,
-               newCanvas("leitercanvas", 1000,20)
-               .settings.add(0, 10, getText("Leiter"))
-               //.settings.center()
-               .print()
-               ,
-               newCanvas("leitercanvas2", 1000,350)
-               .settings.add(250,200, getImage("leiter"))
-               .settings.add(400,300, getDropDown("leiter"))
-               //.settings.center()
-               .print()
-               ,
-              newCanvas("filler2", 40, 150)
-               .print()
-               ,
     newButton("continue", "Weiter")
                .settings.css("font-family", "calibri").settings.css("font-size", "12px")
                //.settings.center()
@@ -534,10 +505,7 @@ PennController("Meta1",
 
             ).and( getDropDown("studium").test.selected()
                    .failure( newText('errorstudium', "<br>Bitte Studium angeben.").color("red") .center().print() )
-
-            ).and(getDropDown("leiter").test.selected()
-                   .failure( newText('leitererr', "<br>Bitte Variante auf der Leiter angeben.").color("red") .center().print() )
-
+                  
             ).and(
              getTextInput("wohnort").test.text(/^.+/) // testing if at least one digit was written in the input box
                 .failure(
@@ -561,9 +529,7 @@ PennController("Meta1",
                ,
                getDropDown("sex").wait("first")
                ,
-                getDropDown("studium").wait("first")
-               ,
-               getDropDown("leiter").wait("first")
+                getDropDown("studium").wait("first")             
                ,
                getDropDown("abschluss").wait("first")
  )
